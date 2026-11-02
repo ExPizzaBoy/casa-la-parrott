@@ -1,0 +1,94 @@
+# ------------------------------------------------------------------
+# Casa La Parrott hub settings. Edit this file, commit, and the page rebuilds.
+# ------------------------------------------------------------------
+title: Casa La Parrott
+timezone: America/Detroit
+days_ahead: 60          # how far ahead to read calendars
+pack_lead_hours: 36     # show packing lists this many hours before an event
+countdown_days: 60      # show special events this many days out
+show_locations: true    # set false if the page is public and you'd rather not show addresses
+
+# Each calendar is an ICS feed. Keep the private URLs out of this file:
+# store them as GitHub repository secrets and refer to each one as ${...} below.
+calendars:
+  # --- Mom: personal calendar shows everything; work calendar only shows working late
+  - name: Mom
+    color: "#f76707"
+    url: "${CAL_MOM}"
+  - name: Mom (work)
+    person: Mom
+    color: "#f76707"
+    url: "${CAL_MOM_WORK}"
+    only: [late]
+
+  # --- Dad: same setup
+  - name: Dad
+    color: "#1c7ed6"
+    url: "${CAL_DAD}"
+  - name: Dad (work)
+    person: Dad
+    color: "#1c7ed6"
+    url: "${CAL_DAD_WORK}"
+    only: [late]
+
+  # --- Piper: everything (volleyball, school, plans)
+  - name: Piper
+    color: "#37b24d"
+    url: "${CAL_PIPER}"
+
+  # --- Paige is away at college: skip her class schedule, only show
+  #     trips home, breaks, visits and special events
+  - name: Paige
+    color: "#d6336c"
+    url: "${CAL_PAIGE}"
+    only: [home, special]
+
+  # --- Shared family calendar (birthdays, holidays, trips)
+  - name: Family
+    color: "#7048e8"
+    url: "${CAL_FAMILY}"
+
+# How events get tagged. Words match the event title (whole words, plurals ok).
+# You can also force a tag by putting #tagname in the event description, e.g. #special
+#   banner: true    -> shown in the alert bar on the day (and the day before)
+#   countdown: true -> shown in "Coming up" with a days-to-go countdown
+categories:
+  practice:
+    label: Practice
+    icon: "🏐"
+    match: [practice, training, open gym, conditioning, clinic, lesson, "[practice]"]
+  game:
+    label: Game day
+    icon: "🏆"
+    match: [game, match, tournament, scrimmage, invitational, "[game]"]
+  late:
+    label: Working late
+    icon: "🌙"
+    banner: true
+    match: ["working late", "work late", "late night", "late shift", "[late]"]
+  notice:
+    label: Heads up
+    icon: "📣"
+    banner: true
+    match: ["no school", "half day", "early release", "early dismissal", "pickup change", "[notice]"]
+  home:
+    label: Home visit
+    icon: "🏠"
+    countdown: true
+    banner: true
+    match: ["coming home", "home for", "home from", "visit", "break", "move-in", "move-out", "move in", "move out", "family weekend", "parents weekend", "[home]"]
+  special:
+    label: Special event
+    icon: "🎉"
+    countdown: true
+    match: [birthday, party, anniversary, vacation, trip, concert, wedding, holiday, graduation, "senior night", "[special]"]
+
+# Packing lists. A rule applies when its words appear in the event title or location.
+# Also: add a line like "Pack: snack, folding chair" to any event's description.
+packing:
+  - match: [volleyball, practice, open gym, conditioning, clinic]
+    items: [Knee pads, Court shoes, Spandex, Water bottle, Hair ties]
+  - match: [game, match, tournament, scrimmage, invitational]
+    items: [Knee pads, Court shoes, Spandex, Game jersey, Water bottle, Hair ties, Snacks]
+  - match: [tournament, invitational]
+    items: [Phone charger, Lunch money, Blanket or hoodie]
